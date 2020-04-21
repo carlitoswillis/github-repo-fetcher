@@ -5,6 +5,7 @@ import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 import Repo from './components/Repo.jsx';
 
+var fs = require ('fs');
 var port = require('../../server/index');
 console.log(port);
 
