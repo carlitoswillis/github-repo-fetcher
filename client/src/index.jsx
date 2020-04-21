@@ -4,8 +4,8 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 import Repo from './components/Repo.jsx';
-import port from '../../server/index';
 
+var port = require('../../server/index');
 console.log(port);
 
 class App extends React.Component {
