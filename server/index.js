@@ -1,18 +1,54 @@
 const express = require('express');
+var db = require('../database');
+var gh = require('../helpers/github.js');
+// var cors = require('cors')
+// const fetch = require("node-fetch");
+var request = require('request');
+var http = require('http');
+var bodyParser = require('body-parser')
+
+
 let app = express();
 
+// ----------------
+// middle ware
+
 app.use(express.static(__dirname + '/../client/dist'));
+// app.use(cors())
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+)
+
+app.use(bodyParser.json())
+
 
 app.post('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should take the github username provided
-  // and get the repo information from the github API, then
-  // save the repo information in the database
+
+  gh.getReposByUsername(req.body.username, (repos) => {
+
+    var parsedRepos = JSON.parse(repos.body);
+    for (var repo of parsedRepos) {
+      // console.log(repo);
+      db.save(repo);
+    }
+    res.end();
+  });
+
 });
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
+
+
+  db.Repo.find({}, function (err, repo) {
+    if (err) return console.log(err);
+  }).sort( { popularity: -1 } ).limit(25)
+  .then((repos) => {
+    res.end(JSON.stringify(repos));
+  })
+
 });
 
 let port = 1128;
