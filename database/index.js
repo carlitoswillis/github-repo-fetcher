@@ -1,8 +1,15 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher', {
+
+
+let uri = 'mongodb://user:pass@host:port/dbname' || 'mongodb://localhost/fetcher' ;
+
+
+
+mongoose.connect(uri, {
   useMongoClient: true,
   /* other options */
 });
+
 
 let repoSchema = mongoose.Schema({
   // TODO: your schema here!
