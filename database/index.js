@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 
-let uri = 'mongodb://user:pass@host:port/dbname' || 'mongodb://localhost/fetcher' ;
+let uri = process.env.MONGODB_URI|| 'mongodb://localhost/fetcher' ;
+
 
 
 
