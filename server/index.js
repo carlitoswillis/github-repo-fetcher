@@ -47,13 +47,13 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
 
 
-  db.Repo.find({}, function (err, repo) {
+  return db.Repo.find({}, function (err, repo) {
     if (err) return console.log(err);
   }).sort( { popularity: -1 } ).limit(25)
   .then((repos) => {
-    db.Repo.count()
+    return db.Repo.count()
     .then((count) => {
-      res.end(JSON.stringify([repos, count]));
+      res.end(JSON.stringify({reposAndCount: [repos, count]}));
     });
   });
 

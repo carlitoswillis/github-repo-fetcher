@@ -35,17 +35,19 @@ class App extends React.Component {
     };
 
     $.ajax(settings).done(function (response) {
+
+      // console.log(response);
       setStateTwo({
-        repos: JSON.parse(response)[0],
-        totalRepos: JSON.parse(response)[1]
-      })
+        repos: JSON.parse(response).reposAndCount[0],
+        totalRepos: JSON.parse(response).reposAndCount[1]
+      });
     });
 
   }
 
   search (term) {
 
-    var getRequest = function (username) {
+    var postRequest = function (username) {
 
       var requestOptions = {
         method: 'POST',
@@ -63,38 +65,35 @@ class App extends React.Component {
         .catch(error => console.log('error', error));
     }
 
-    getRequest(term)
+    postRequest(term)
     .then((response) => {
       console.log(`${term} was searched`);
-      this.setState({
-        repos: JSON.parse(response)[0],
-        totalRepos: JSON.parse(response)[1]
-      })
+
     })
-    // .then(() => {
+    .then(() => {
 
-    //   var setStateTwo = this.setState.bind(this);
+      var setStateTwo = this.setState.bind(this);
 
-    //   var settings = {
-    //     "url": "http://localhost:1128/repos",
-    //     "method": "GET",
-    //     "timeout": 0,
-    //     "headers": {
-    //       "Content-Type": "application/json"
-    //     },
-    //     "data": "{'username': 'carlitoswillis'}",
-    //     complete: function () {
-    //       console.log('complete');
-    //     }
-    //   };
+      var settings = {
+        "url": "http://localhost:1128/repos",
+        "method": "GET",
+        "timeout": 0,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "data": "{'username': 'carlitoswillis'}",
+        complete: function () {
+          // console.log('complete');
+        }
+      };
 
-    //   $.ajax(settings).done(function (response) {
-    //     setStateTwo({
-    //       repos: JSON.parse(response)[0],
-    //       totalRepos: JSON.parse(response)[1]
-    //     })
-    //   });
-    // })
+      $.ajax(settings).done(function (response) {
+        setStateTwo({
+          repos: JSON.parse(response).reposAndCount[0],
+          totalRepos: JSON.parse(response).reposAndCount[1]
+        })
+      });
+    })
 
     // TODO
   }
