@@ -30,9 +30,14 @@ app.post('/repos', function (req, res) {
   gh.getReposByUsername(req.body.username, (repos) => {
 
     var parsedRepos = JSON.parse(repos.body);
-    for (var repo of parsedRepos) {
-      // console.log(repo);
-      db.save(repo);
+
+    if (Array.isArray(parsedRepos)) {
+      for (var repo of parsedRepos) {
+        // console.log(repo);
+        db.save(repo);
+      }
+    } else {
+      console.log(typeof parsedRepos);
     }
     res.end();
   });
@@ -46,8 +51,11 @@ app.get('/repos', function (req, res) {
     if (err) return console.log(err);
   }).sort( { popularity: -1 } ).limit(25)
   .then((repos) => {
-    res.end(JSON.stringify(repos));
-  })
+    db.Repo.count()
+    .then((count) => {
+      res.end(JSON.stringify([repos, count]));
+    });
+  });
 
 });
 

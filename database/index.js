@@ -6,11 +6,13 @@ mongoose.connect('mongodb://localhost/fetcher', {
 
 let repoSchema = mongoose.Schema({
   // TODO: your schema here!
-  name: String,
+  repo_name: String,
   id: Number,
   owner: String,
-  popularity: Number
-
+  popularity: Number,
+  onwerInfo: String,
+  url: String,
+  description: String
 });
 
 
@@ -24,7 +26,7 @@ let save = (repoData) => {
     id: repoData.id,
     repo_name: repoData.name,
     owner: repoData.owner.login,
-    onwerInfo: repoData.owner,
+    onwerInfo: JSON.stringify(repoData.owner),
     url: repoData.html_url,
     description: repoData.description,
     popularity: repoData.stargazers_count + repoData.watchers_count + repoData.forks_count
