@@ -67,5 +67,4 @@ app.listen(port, function() {
 });
 
 
-
-export default port;
+module.export = process.env.PORT;
