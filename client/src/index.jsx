@@ -4,6 +4,9 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 import Repo from './components/Repo.jsx';
+import port from '../../server/index';
+
+console.log(port);
 
 class App extends React.Component {
   constructor(props) {
@@ -22,7 +25,7 @@ class App extends React.Component {
     var setStateTwo = this.setState.bind(this);
 
     var settings = {
-      "url": "http://localhost:1128/repos",
+      "url": `http://localhost:${port}/repos`,
       "method": "GET",
       "timeout": 0,
       "headers": {
@@ -60,7 +63,7 @@ class App extends React.Component {
 
       };
 
-      return fetch("http://localhost:1128/repos", requestOptions)
+      return fetch(`http://localhost:${port}/repos`, requestOptions)
         // .then(response => response.text())
         .catch(error => console.log('error', error));
     }
@@ -75,7 +78,7 @@ class App extends React.Component {
       var setStateTwo = this.setState.bind(this);
 
       var settings = {
-        "url": "http://localhost:1128/repos",
+        "url": `http://localhost:${port}/repos`,
         "method": "GET",
         "timeout": 0,
         "headers": {
