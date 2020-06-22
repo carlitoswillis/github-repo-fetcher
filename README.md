@@ -1,4 +1,4 @@
-# fullstack-review
+# github-repo-fetcher
 This app allow users to input a GitHub username and check their repositories' popularity against other GitHub users in the database.
 
 This app was created using React to interact with a RESTful API powered by Node.js using an Express server and a MongoDB database.
